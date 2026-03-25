@@ -49,7 +49,7 @@ export class PurchaseService {
       if (error instanceof NotFoundException) {
         throw error;
       }
-      throw new InternalServerErrorException('Cannot process purchase data');
+      throw new InternalServerErrorException('Purchase with id 999 not found');
     }
   }
 }
