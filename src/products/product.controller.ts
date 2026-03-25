@@ -7,7 +7,7 @@ import type { ApiResponse } from 'src/interfaces/response.interface';
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
-  @Get()
+  @Get('/products')
   findAll(): ApiResponse<Product[]> {
     const result = this.productService.findAll();
     return {
