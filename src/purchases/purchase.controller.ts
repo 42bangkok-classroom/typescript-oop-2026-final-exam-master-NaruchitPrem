@@ -1,7 +1,17 @@
-import { Controller, Get, Param, Query } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  Query,
+  Post,
+  Body,
+  ValidationPipe,
+  UsePipes,
+} from '@nestjs/common';
 import { PurchaseService } from './purchase.service';
 import { Purchase } from './purchase.interface';
 import type { ApiResponse } from 'src/interfaces/response.interface';
+import { CreatePurchaseDto } from './dto/create-purchase.dto';
 
 @Controller('purchases')
 export class PurchaseController {
@@ -26,5 +36,11 @@ export class PurchaseController {
     }
 
     return this.purchaseService.findOne(id, fieldsArray);
+  }
+
+  @Post()
+  @UsePipes(new ValidationPipe())
+  create(@Body() createUserDto: CreatePurchaseDto) {
+    return this.purchaseService.create(createUserDto);
   }
 }
