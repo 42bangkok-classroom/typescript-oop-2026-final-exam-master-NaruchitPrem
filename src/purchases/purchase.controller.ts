@@ -3,11 +3,11 @@ import { PurchaseService } from './purchase.service';
 import { Purchase } from './purchase.interface';
 import type { ApiResponse } from 'src/interfaces/response.interface';
 
-@Controller('purchases')
+@Controller()
 export class PurchaseController {
   constructor(private readonly purchaseService: PurchaseService) {}
 
-  @Get()
+  @Get('purchases')
   findAll(): ApiResponse<Purchase[]> {
     const result = this.purchaseService.findAll();
     return {
