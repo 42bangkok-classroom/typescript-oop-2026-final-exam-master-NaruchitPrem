@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Param, Query } from '@nestjs/common';
 import { PurchaseService } from './purchase.service';
 import { Purchase } from './purchase.interface';
 import type { ApiResponse } from 'src/interfaces/response.interface';
@@ -15,5 +15,16 @@ export class PurchaseController {
       data: result,
       message: 'Fetched purchases successfully',
     };
+  }
+
+  @Get(':id')
+  findOne(@Param('id') id: number, @Query('fields') fields?: string) {
+    let fieldsArray: string[] | undefined;
+
+    if (fields) {
+      fieldsArray = fields.split(',').map((field) => field.trim());
+    }
+
+    return this.purchaseService.findOne(id, fieldsArray);
   }
 }
