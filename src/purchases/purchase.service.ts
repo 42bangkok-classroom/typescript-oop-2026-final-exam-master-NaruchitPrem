@@ -6,6 +6,7 @@ import {
 import * as fs from 'fs';
 import * as path from 'path';
 import { Purchase } from './purchase.interface';
+import { CreatePurchaseDto } from './dto/create-purchase.dto';
 
 @Injectable()
 export class PurchaseService {
@@ -50,6 +51,34 @@ export class PurchaseService {
         throw error;
       }
       throw new InternalServerErrorException('Purchase with id 999 not found');
+    }
+  }
+
+  create(createUserDto: CreatePurchaseDto) {
+    try {
+      const filePath = path.join(process.cwd(), 'data', 'purchases.json');
+
+      const purchases = this.findAll();
+
+      let maxId = 0;
+      if (purchases.length > 0) {
+        const ids = purchases.map((u) => parseInt(String(u.id), 10));
+        maxId = Math.max(...ids);
+      }
+      const newId = String(maxId + 1);
+
+      const newPurchase = {
+        id: newId,
+        ...createUserDto,
+      };
+
+      purchases.push(newPurchase as unknown as Purchase);
+
+      fs.writeFileSync(filePath, JSON.stringify(purchases, null, 2), 'utf-8');
+
+      return newPurchase;
+    } catch {
+      throw new InternalServerErrorException('Cannot create user');
     }
   }
 }
