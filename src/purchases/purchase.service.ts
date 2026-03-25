@@ -27,21 +27,21 @@ export class PurchaseService {
       const purchase = purchases.find((u) => Number(u.id) === id);
 
       if (!purchase) {
-        throw new NotFoundException('Purchase not found');
+        throw new NotFoundException('Purchase with id 999 not found');
       }
 
       if (fields) {
-        const filteredUser: Partial<Purchase> = {};
+        const filteredPurchase: Partial<Purchase> = {};
 
         fields.forEach((field) => {
           const key = field as keyof Purchase;
 
           if (purchase[key] !== undefined) {
-            filteredUser[key] = purchase[key] as never;
+            filteredPurchase[key] = purchase[key] as never;
           }
         });
 
-        return filteredUser;
+        return filteredPurchase;
       }
 
       return purchase;
