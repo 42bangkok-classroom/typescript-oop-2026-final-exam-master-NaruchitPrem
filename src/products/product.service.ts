@@ -13,7 +13,7 @@ export class ProductService {
 
   findAll(): Product[] {
     const rawData = fs.readFileSync(this.dataPath, 'utf-8');
-    const users = JSON.parse(rawData) as Product[];
-    return users;
+    const product = JSON.parse(rawData) as Product[];
+    return product;
   }
 }
